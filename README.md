@@ -2,4 +2,4 @@
 ## Integrated with ChatGPT
 
 ## 1 Registration Page
-img('register.png')
+!["register.png"]
