@@ -9,6 +9,6 @@ mongoose.connect(process.env.DATABASEURL).then(()=>{
     console.log('DATABASE Not Connected' + err);
 }) 
 
-app.listen(80,()=>{
+app.listen(80,"0.0.0.0",()=>{
     console.log("Server is Running"); 
 })  
