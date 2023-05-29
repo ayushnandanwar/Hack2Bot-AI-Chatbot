@@ -8,7 +8,7 @@
 ### 1 Chat Page
 ![](public/chatapp.png)
 
-### Steps to Run Project
+## Steps to Run Project
 
 You need to create API_KEY from [platform.openai.com](https://platform.openai.com/)
 
@@ -19,7 +19,7 @@ Create config.env file in project
 ```
 DATABASEURL = YOUR_MONGO_URL
 JWT_SECRET = YOUR_JWT_SECRET_KEY
-API_KEY=sk-YOUR_GPT_API_KEY
+API_KEY = YOUR_GPT_API_KEY
 ```
 
 ### Open Terminal and run following command
@@ -28,3 +28,5 @@ API_KEY=sk-YOUR_GPT_API_KEY
 npm install
 npm run start
 ```
+
+### Thank You for visiting my repository 
