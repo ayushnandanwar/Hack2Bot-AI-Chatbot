@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hac2Bot</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow:auto;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      max-width: 100%;
+      /* margin: 20px auto; */
+      height: 85%;
+    }
+
+    .history-panel {
+      flex-basis: 30%;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px 4px; 
+    }
+
+    .chat-container {
+      flex-basis: 65%;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .header {
+      background-color: #4caf50;
+      padding: 10px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      margin: 0;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+    }
+    .user-info > *{
+      margin: 0 12px;
+    }
+    .user-info span {
+      margin-right: 10px;
+      font-size: 20px;
+    }
+
+    .profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: #4caf50;
+      cursor: pointer;
+    }
+
+    .logout-button {
+      padding: 5px 10px;
+      background-color: white;
+      color: #4caf50;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .chat-log {
+      height: 85%;
+      overflow-y: scroll;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .user-input input {
+      width: 80%;
+      padding: 10px 7px;
+      border: none;
+      border-radius: 3px;
+      margin-right: 10px;
+    }
+
+    .user-input button {
+      padding: 7px 12px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size:1.01rem;
+    }
+    li{
+      list-style: none;
+      /* border: 1px solid black; */
+      padding: 10px 1px;
+      cursor: pointer;
+    }
+    li:hover{
+      background-color: #ccc;
+    }
+    .scroll{
+      overflow: scroll;
+      height: 90%;
+    }
+    .loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.loading-icon {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+#loading-container {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.loading-icon {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Hack2Bot an AI based Chatbot</h1>
+    <div class="user-info">
+      <span><%= user.full_name %></span>
+      <div class="profile-icon" onclick="toggleProfileMenu()">
+        <i class="fas fa-user"></i>
+      </div>
+      <button class="logout-button" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+    </div>
+  </div>
+  <div class="container">
+    <div class="history-panel">
+      <h3>Chat History</h3>
+      <div class="scroll">
+        <% user.chats.forEach(function(data){ %>
+          <li class="chat-item">
+            <span class="sender">🤖:</span>
+            <span class="message"> <%=data.question  %></span>
+          </li>
+          <% }); %>
+      </div>
+    </div>
+
+    <div class="chat-container">
+      <div class="chat-log" id="chat-log">
+        <div class="loading-container" id="loading-container">
+          <div class="loading-icon"></div>
+        </div>
+      </div>
+      <div class="user-input">
+        <input type="text" id="user-input" placeholder="Enter your message..." />
+        <button onclick="sendMessage()">Send</button>
+        <button id="start-btn">Speak</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Check if the browser supports the SpeechRecognition API
+    // Check if the browser supports the SpeechRecognition API
+    // Check if the browser supports the SpeechRecognition API
+if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+
+  const toggleBtn = document.getElementById('start-btn');
+  const resultDiv = document.getElementById('user-input');
+
+  let isListening = false;
+
+  recognition.continuous = true;
+
+  toggleBtn.addEventListener('click', () => {
+    if (isListening) {
+      recognition.stop();
+      toggleBtn.textContent = 'Speak';
+      isListening = false;
+    } else {
+      recognition.start();
+      toggleBtn.textContent = 'Stop';
+      isListening = true;
+    }
+  });
+
+  recognition.onresult = (event) => {
+    const lastResultIndex = event.results.length - 1;
+    const transcript = event.results[lastResultIndex][0].transcript;
+    resultDiv.value = transcript;
+  };
+
+  recognition.onend = () => {
+    if (isListening) {
+      recognition.start();
+    }
+  };
+} else {
+  // SpeechRecognition API not supported
+  alert('Speech recognition is not supported in this browser.');
+}
+
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+      var userInput = document.getElementById("user-input");
+      userInput.addEventListener("keydown", function(event) {
+        if (event.keyCode === 13) {
+          sendMessage();
+        }
+      });
+    });
+
+    async function sendMessage() {
+      var userInput = document.getElementById("user-input");
+      var message = userInput.value.trim();
+
+      if (message !== "") {
+        appendMessage("User", message);
+        userInput.value = "";
+
+        // Show the loading container
+        var loadingContainer = document.getElementById("loading-container");
+        loadingContainer.style.display = "flex";
+
+        try {
+          // Send the message to the server or process it locally
+          var response = await generateResponse(message);
+          // Append the chatbot's response to the chat log
+          appendMessage("Chatbot", response);
+        } catch (error) {
+          console.error(error);
+        }
+
+        // Hide the loading container
+        loadingContainer.style.display = "none";
+      }
+    }
+
+    function appendMessage(sender, message) {
+      var chatLog = document.getElementById("chat-log");
+      var newMessage = document.createElement("div");
+      newMessage.className = "message";
+      newMessage.innerHTML = "<strong>" + sender + ":</strong> " + message;
+      chatLog.appendChild(newMessage);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+     async function generateResponse(userMessage) {
+      // Replace this with your chatbot implementation
+      // You can use AJAX or fetch() to send the user's message to the server for processing
+      // and receive the chatbot's response
+      let response= await fetch('/api/chat?question=' + userMessage, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      let data = await response.json();
+      console.log(data);
+
+      var res = "🤖: " + data.response;
+      return res;
+    }
+
+    async function  logout() {
+      // Add your logout functionality here
+      let response= await fetch('/api/user/logout', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      let data = await response.json();
+      console.log(data);
+      alert("Logout Successfully");
+      location.replace('/login')
+    }
+
+    // function toggleProfileMenu() {
+    //   // Add code to toggle profile menu visibility here
+      
+    // }
+  </script>
+</body>
+</html>
