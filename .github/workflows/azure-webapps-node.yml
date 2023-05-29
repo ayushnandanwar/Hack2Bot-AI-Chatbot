@@ -44,10 +44,10 @@ jobs:
 
     - name: npm install, build, and test
       run: |
-        export DATABASEURL = mongodb+srv://root:pass22@cluster0.96ge0.mongodb.net/chatbot?retryWrites=true&w=majority
-        export JWT_SECRET = thisIsMySecrete12340
+        export DATABASEURL=mongodb+srv://root:pass22@cluster0.96ge0.mongodb.net/chatbot?retryWrites=true&w=majority
+        export JWT_SECRET=thisIsMySecrete12340
         export API_KEY=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
-        export PORT = 8080
+        export PORT=8080
         npm install
         npm run start
 
