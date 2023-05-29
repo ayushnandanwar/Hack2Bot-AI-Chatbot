@@ -14,12 +14,15 @@ You need to create API_KEY from [platform.openai.com](https://platform.openai.co
 
 Create config.env file in project
 
-Add following in file
+#### Add following in file
+
+```
 DATABASEURL = YOUR_MONGO_URL
 JWT_SECRET = YOUR_JWT_SECRET_KEY
 API_KEY=sk-YOUR_GPT_API_KEY
+```
 
-Open Terminal and run following command
+#### Open Terminal and run following command
 
 ```
 npm install
