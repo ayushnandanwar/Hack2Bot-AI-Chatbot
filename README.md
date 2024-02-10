@@ -3,9 +3,9 @@
 
 ### 1 Registration Page
 ![](public/register.png)
-### 1 Login Page
+### 2 Login Page
 ![](public/login.png)
-### 1 Chat Page
+### 3 Chat Page
 ![](public/chatapp.png)
 
 ## Steps to Run Project
@@ -17,9 +17,9 @@ Create config.env file in project
 ### Add following in file
 
 ```
-DATABASEURL = YOUR_MONGO_URL
-JWT_SECRET = YOUR_JWT_SECRET_KEY
-API_KEY = YOUR_GPT_API_KEY
+DATABASEURL = <YOUR_MONGO_URL>
+JWT_SECRET = <YOUR_JWT_SECRET_KEY>
+API_KEY = <YOUR_GPT_API_KEY>
 ```
 
 ### Open Terminal and run following command
