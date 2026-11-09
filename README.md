@@ -1,32 +1,55 @@
-# Hack2Bot an AI based Chatbot
-## Integrated with ChatGPT
+# Hack2Bot — AI Chatbot
 
-### 1 Registration Page
-![](public/register.png)
-### 2 Login Page
-![](public/login.png)
-### 3 Chat Page
-![](public/chatapp.png)
+A web-based chatbot project integrated with the OpenAI API. The application includes user registration, login, and a chat interface.
 
-## Steps to Run Project
+## Application preview
 
-You need to create API_KEY from [platform.openai.com](https://platform.openai.com/)
+| Registration | Login | Chat |
+|---|---|---|
+| ![Registration](public/register.png) | ![Login](public/login.png) | ![Chat](public/chatapp.png) |
 
-Create config.env file in project
+## Technology
 
-### Add following in file
+- **Runtime:** Node.js
+- **Web framework:** Express
+- **Database:** MongoDB with Mongoose
+- **Authentication:** JWT and bcrypt
+- **Templating:** EJS and Pug
+- **AI integration:** OpenAI API
 
+## Getting started
+
+### Prerequisites
+
+- Node.js and npm
+- A MongoDB connection string
+- An OpenAI API key
+
+### Configure environment
+
+Create a `config.env` file in the project root:
+
+```env
+DATABASEURL=<YOUR_MONGO_URL>
+JWT_SECRET=<YOUR_JWT_SECRET_KEY>
+API_KEY=<YOUR_OPENAI_API_KEY>
 ```
-DATABASEURL = <YOUR_MONGO_URL>
-JWT_SECRET = <YOUR_JWT_SECRET_KEY>
-API_KEY = <YOUR_GPT_API_KEY>
-```
 
-### Open Terminal and run following command
+Keep real credentials out of source control. Use your own values and do not commit the environment file.
 
-```
+### Install and run
+
+```bash
 npm install
 npm run start
 ```
 
-### Thank You for visiting my repository 
+The start script runs `node index.js`.
+
+## Repository
+
+[Browse the source code](https://github.com/ayushnandanwar/Hack2Bot-AI-Chatbot)
+
+---
+
+<sub>Built as a team hackathon project. The repository documents an early full-stack implementation of authentication and an AI-powered chat experience.</sub>
